@@ -1,12 +1,13 @@
 package com.nativeutils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 import java.util.Hashtable;
 import java.util.UUID;
@@ -41,7 +42,7 @@ public class NativeUtils extends CordovaPlugin
           }
           catch (JSONException e)
           {
-            callbackContext.error("authToken/url required as parameters: " + e.getMessage());
+            callbackContext.error(e.getMessage());
           }
 
           return true;
