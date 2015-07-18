@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.nativeutils"
+    version="1.0.0">
+    <name>CDVNativeUtils</name>
+    <description>Native Utils for Cordova Apps</description>
+    <license>Private</license>
+    <keywords>phonegap,native,android</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <dependency id="org.apache.cordova.dialogs" />
+
+    <js-module src="www/NativeUtils.js" name="NativeUtils">
+        <clobbers target="plugins.nativeUtils" />
+    </js-module>
+
+    <platform name="android">
+
+        <source-file src="src/android/NativeUtils.java" target-dir="src/com/nativeutils" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+        </config-file>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="NativeUtils">
+                <param name="android-package" value="com.nativeutils.NativeUtils"/>
+            </feature>
+        </config-file>
+
+     </platform>
+
+</plugin>
