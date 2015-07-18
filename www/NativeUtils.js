@@ -16,5 +16,5 @@ module.exports =
            'showDialog',
            [title, message, buttonPositive, buttonNegative]
       );
-    };
+    }
 };
