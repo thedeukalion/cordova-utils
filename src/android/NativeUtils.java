@@ -65,7 +65,7 @@ public class NativeUtils extends CordovaPlugin
             if (callbackDialogs.contains(id))
             {
               CallbackContext callback = callbackDialogs.get(id);
-              callbackContext.remove(id);
+              callbackDialogs.remove(id);
 
               try
               {
@@ -97,7 +97,7 @@ public class NativeUtils extends CordovaPlugin
             if (callbackDialogs.contains(id))
             {
               CallbackContext callback = callbackDialogs.get(id);
-              callbackContext.remove(id);
+              callbackDialogs.remove(id);
 
               try
               {
