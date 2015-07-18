@@ -52,7 +52,7 @@ public class NativeUtils extends CordovaPlugin
 
     private void showDialog(final String id, String title, String message, String positiveButton, String negativeButton)
     {
-      AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+      AlertDialog.Builder builder = new AlertDialog.Builder(this.activity);
 
       builder
       .setMessage(message)
