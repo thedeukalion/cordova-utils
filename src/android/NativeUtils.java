@@ -35,7 +35,7 @@ public class NativeUtils extends CordovaPlugin
             String negativeButton = data.getString(3);
 
             String id = UUID.randomUUID().toString();
-            callbackContext.put(id, callbackContext);
+            callbackDialogs.put(id, callbackContext);
             showDialog(id, title, message, positiveButton, negativeButton);
 
           }
