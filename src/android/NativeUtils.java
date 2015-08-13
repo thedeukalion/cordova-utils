@@ -51,7 +51,7 @@ public class NativeUtils extends CordovaPlugin
 
             String id = UUID.randomUUID().toString();
             callbackDialogs.put(id, callbackContext);
-            showDialog(id, title, message, buttons);
+            showDialog(id, title, message, b);
 
           }
           catch (JSONException e)
