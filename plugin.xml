@@ -25,12 +25,9 @@
 
         <source-file src="src/android/NativeUtils.java" target-dir="src/com/nativeutils" />
 
-        <source-file src="src/android/res/drawable/dialog_button_default.xml" target="res/drawable/dialog_button_default.xml" />
-        <source-file src="src/android/res/drawable/dialog_button_pressed.xml" target="res/drawable/dialog_button_pressed.xml" />
-        <source-file src="src/android/res/drawable/dialog_button_selector.xml" target="res/drawable/dialog_button_selector.xml" />
-
-        <source-file src="src/android/res/layout/dialog.xml" target="res/layout/dialog.xml" />
-        <source-file src="src/android/res/layout/dialog_button.xml" target="res/layout/dialog_button.xml" />
+        <source-file src="src/android/res/drawable/dialog_button.xml" target-dir="res/drawable/" />
+        <source-file src="src/android/res/layout/dialog.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/dialog_button.xml" target-dir="res/layout" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application"></config-file>
 
