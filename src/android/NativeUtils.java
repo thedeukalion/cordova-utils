@@ -81,15 +81,15 @@ public class NativeUtils extends CordovaPlugin
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View container =  inflater.inflate(R.layout.dialog, null);
+        View container =  inflater.inflate(com.nativeutils.R.layout.dialog, null);
 
-        TextView t = (TextView)container.findViewById(R.id.title);
+        TextView t = (TextView)container.findViewById(com.nativeutils.R.id.title);
         t.setText(title);
 
-        TextView m = (TextView)container.findViewById(R.id.message);
+        TextView m = (TextView)container.findViewById(com.nativeutils.R.id.message);
         m.setText(message);
 
-        LinearLayout b = (LinearLayout)container.findViewById(R.id.buttons);
+        LinearLayout b = (LinearLayout)container.findViewById(com.nativeutils.R.id.buttons);
 
         if (vertical)
         {
@@ -119,7 +119,7 @@ public class NativeUtils extends CordovaPlugin
         for (int i=0; i < buttons.length; i++)
         {
 
-            Button button = (Button)inflater.inflate(R.layout.dialog_button, null);
+            Button button = (Button)inflater.inflate(com.nativeutils.R.layout.dialog_button, null);
 
             LinearLayout.LayoutParams layoutParams = null;
 
