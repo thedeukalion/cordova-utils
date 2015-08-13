@@ -51,7 +51,7 @@ public class NativeUtils extends CordovaPlugin
 
             String id = UUID.randomUUID().toString();
             callbackDialogs.put(id, callbackContext);
-            ShowDialog(id, title, message, b);
+            ShowDialog(id, title, message, b, b.length > 2 ? true : false);
 
           }
           catch (JSONException e)
@@ -63,11 +63,6 @@ public class NativeUtils extends CordovaPlugin
         }
 
         return false;
-    }
-
-    public void ShowDialog(final UUID id, String title, String message, String[] buttons)
-    {
-      ShowDialog(id, title, message, buttons, buttons.length > 2 ? true : false);
     }
 
     public void ShowDialog(final UUID id, String title, String message, String[] buttons, boolean vertical)
