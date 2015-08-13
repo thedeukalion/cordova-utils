@@ -21,13 +21,19 @@
 
     <platform name="android">
 
+        <!--<framework src="com.android.support:appcompat-v7:22.2.0"/>-->
+
         <source-file src="src/android/NativeUtils.java" target-dir="src/com/nativeutils" />
 
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-        </config-file>
+        <source-file src="res/drawable/dialog_button_default.xml" target-dir="res/drawable" />
+        <source-file src="res/drawable/dialog_button_pressed.xml" target-dir="res/drawable" />
+        <source-file src="res/drawable/dialog_button_selector.xml" target-dir="res/drawable" />
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
-        </config-file>
+        <source-file src="res/layout/dialog.xml" target-dir="res/layout" />
+        <source-file src="res/layout/dialog_button.xml" target-dir="res/layout" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application"></config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest"></config-file>
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="NativeUtils">

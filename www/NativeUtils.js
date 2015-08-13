@@ -7,14 +7,13 @@ module.exports =
       var
       title = config.title || "",
       message = config.message || "",
-      buttonPositive = config.buttonPositive || "Yes",
-      buttonNegative = config.buttonNegative || "No";
+      buttons = config.buttons || [];
 
       exec(success || function() {},
            failure || function() {},
            'NativeUtils',
            'showDialog',
-           [title, message, buttonPositive, buttonNegative]
+           [title, message, buttons]
       );
     }
 };
