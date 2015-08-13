@@ -40,7 +40,7 @@ public class NativeUtils extends CordovaPlugin
           {
             String title = data.getString(0);
             String message = data.getString(1);
-            JSONArray buttons = data.getString(2);
+            JSONArray buttons = data.getJSONArray(2);
 
             String[] b = new String[buttons.length()];
 
