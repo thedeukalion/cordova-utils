@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -87,8 +88,8 @@ public class NativeUtils extends CordovaPlugin
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        int resDialog = getResourceId('layout', 'dialog');
-        int resButton = getResourceId('layout', 'dialog_button');
+        int resDialog = getResourceId("layout", "dialog");
+        int resButton = getResourceId("layout", "dialog_button");
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout container =  (LinearLayout)inflater.inflate(resDialog, null);
