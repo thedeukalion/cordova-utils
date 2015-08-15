@@ -65,6 +65,18 @@ public class NativeUtils extends CordovaPlugin
         return false;
     }
 
+    private Resources resources = null;
+
+    public int getResourceId(String name, String type)
+    {
+      if (resources == null)
+      {
+        resources = activity.getResources();
+      }
+
+      return resources.getIdentifier(name, type, activity.getPackageName());
+    }
+
     public void ShowDialog(final UUID id, String title, String message, String[] buttons, boolean vertical)
     {
         final Context context = activity;
@@ -76,15 +88,24 @@ public class NativeUtils extends CordovaPlugin
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View container =  inflater.inflate(android.R.layout.dialog, null);
+        View container =  inflater.inflate(R.layout.dialog, null);
 
-        TextView t = (TextView)container.findViewById(android.R.id.title);
+        TextView t = (TextView)container.getChildAt(0);
         t.setText(title);
 
-        TextView m = (TextView)container.findViewById(android.R.id.message);
+        TextView m = (TextView)container.getChildAt(1);
         m.setText(message);
 
-        LinearLayout b = (LinearLayout)container.findViewById(android.R.id.buttons);
+        LinearLayout b = (LinearLayout)container.getChildAt(3);
+        /*
+        TextView t = (TextView)container.findViewById(R.id.title);
+        t.setText(title);
+
+        TextView m = (TextView)container.findViewById(R.id.message);
+        m.setText(message);
+
+        LinearLayout b = (LinearLayout)container.findViewById(R.id.buttons);
+        */
 
         if (vertical)
         {
@@ -114,7 +135,7 @@ public class NativeUtils extends CordovaPlugin
         for (int i=0; i < buttons.length; i++)
         {
 
-            Button button = (Button)inflater.inflate(android.R.layout.dialog_button, null);
+            Button button = (Button)inflater.inflate(R.layout.dialog_button, null);
 
             LinearLayout.LayoutParams layoutParams = null;
 
