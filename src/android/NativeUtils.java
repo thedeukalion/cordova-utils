@@ -112,7 +112,15 @@ public class NativeUtils extends CordovaPlugin
             public void onClick(View v)
             {
                 int index = Integer.parseInt(v.getTag().toString());
-                ShowDialogResult(cb, index);
+
+                try
+                {
+                  cb.success(index);
+                }
+                catch (Exception ex)
+                {
+                  cb.error(ex.getMessage());
+                }
 
                 dialog.setOnDismissListener(null);
                 dialog.dismiss();
@@ -150,7 +158,14 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onDismiss(DialogInterface dialog)
             {
-              ShowDialogResult(cb, -1);
+              try
+              {
+                cb.success(-1);
+              }
+              catch (Exception ex)
+              {
+                cb.error(ex.getMessage());
+              }
             }
         });
 
@@ -160,93 +175,4 @@ public class NativeUtils extends CordovaPlugin
 
         dialog.show();
     }
-
-    private void ShowDialogResult(final CallbackContext cb, int index)
-    {
-      try
-      {
-        cb.success(index);
-      }
-      catch (Exception ex)
-      {
-        cb.error(ex.getMessage());
-      }
-    }
-
-
-    /*
-    private void showDialog(final String id, String title, String message, String positiveButton, String negativeButton)
-    {
-      AlertDialog.Builder builder = new AlertDialog.Builder(this.activity);
-
-      builder
-      .setMessage(message)
-      .setTitle(title)
-      .setPositiveButton(positiveButton, new DialogInterface.OnClickListener()
-      {
-          @Override
-          public void onClick(DialogInterface dialog, int which)
-          {
-            if (callbackDialogs.contains(id))
-            {
-              CallbackContext callback = callbackDialogs.get(id);
-              callbackDialogs.remove(id);
-
-              try
-              {
-
-                JSONObject response = new JSONObject();
-                response.put("Positive", true);
-                response.put("Dismissed", false);
-
-                PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-                result.setKeepCallback(false);
-                callback.sendPluginResult(result);
-              }
-              catch (Exception ex)
-              {
-                PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-                result.setKeepCallback(false);
-                callback.sendPluginResult(result);
-              }
-            }
-
-          }
-      })
-      .setNegativeButton(negativeButton, new DialogInterface.OnClickListener()
-      {
-          @Override
-          public void onClick(DialogInterface dialog, int which)
-          {
-
-            if (callbackDialogs.contains(id))
-            {
-              CallbackContext callback = callbackDialogs.get(id);
-              callbackDialogs.remove(id);
-
-              try
-              {
-
-                JSONObject response = new JSONObject();
-                response.put("Positive", false);
-                response.put("Dismissed", false);
-
-                PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-                result.setKeepCallback(false);
-                callback.sendPluginResult(result);
-              }
-              catch (Exception ex)
-              {
-                PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-                result.setKeepCallback(false);
-                callback.sendPluginResult(result);
-              }
-            }
-          }
-      });
-
-      AlertDialog dialog = builder.create();
-      dialog.show();
-    }
-    */
 }
