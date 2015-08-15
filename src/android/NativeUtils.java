@@ -112,35 +112,8 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onClick(View v)
             {
-                int index = v.getId();
-
-                Toast.makeText(this.activity.getContext(), "You pressed: " + index, Toast.LENTH_SHORT).show();
-
-                if (callbackDialogs.contains(id))
-                {
-
-                  Toast.makeText(this.activity.getContext(), "Callback exists", Toast.LENTH_SHORT).show();
-
-                  CallbackContext callback = callbackDialogs.get(id);
-                  callbackDialogs.remove(id);
-
-                  try
-                  {
-
-                    JSONObject response = new JSONObject();
-                    response.put("Index", index);
-
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-                    result.setKeepCallback(false);
-                    callback.sendPluginResult(result);
-                  }
-                  catch (Exception ex)
-                  {
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-                    result.setKeepCallback(false);
-                    callback.sendPluginResult(result);
-                  }
-                }
+                int index = Integer.parseInt(v.getTag().toString());
+                DialogResult(id, index);
 
                 dialog.setOnDismissListener(null);
                 dialog.dismiss();
@@ -166,7 +139,7 @@ public class NativeUtils extends CordovaPlugin
 
             button.setLayoutParams(layoutParams);
             button.setText(buttons[i]);
-            button.setId(i);
+            button.setTag(i);
             button.setOnClickListener(clickListener);
 
             b.addView(button);
@@ -178,29 +151,7 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onDismiss(DialogInterface dialog)
             {
-              if (callbackDialogs.contains(id))
-              {
-                Toast.makeText(this.activity.getContext(), "You dismissed", Toast.LENTH_SHORT).show();
-
-                CallbackContext callback = callbackDialogs.get(id);
-                callbackDialogs.remove(id);
-
-                try
-                {
-                  JSONObject response = new JSONObject();
-                  response.put("Index", -1);
-
-                  PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-                  result.setKeepCallback(false);
-                  callback.sendPluginResult(result);
-                }
-                catch (Exception ex)
-                {
-                  PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-                  result.setKeepCallback(false);
-                  callback.sendPluginResult(result);
-                }
-              }
+              DialogResult(id, -1);
             }
         });
 
@@ -210,6 +161,36 @@ public class NativeUtils extends CordovaPlugin
 
         dialog.show();
     }
+
+    private void DialogResult(final String id, int index)
+    {
+        Toast.makeText(this.activity, "Result: " + id + " index: " + index, Toast.LENGTH_SHORT).show();
+
+        if (callbackDialogs.contains(id))
+        {
+          CallbackContext callback = callbackDialogs.get(id);
+
+          try
+          {
+            JSONObject response = new JSONObject();
+            response.put("Index", index);
+
+            PluginResult result = new PluginResult(PluginResult.Status.OK, response);
+            result.setKeepCallback(false);
+            callback.sendPluginResult(result);
+          }
+          catch (Exception ex)
+          {
+            PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
+            result.setKeepCallback(false);
+            callback.sendPluginResult(result);
+          }
+
+          callbackDialogs.remove(id);
+        }
+    }
+
+
     /*
     private void showDialog(final String id, String title, String message, String positiveButton, String negativeButton)
     {
