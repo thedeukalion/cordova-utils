@@ -66,16 +66,9 @@ public class NativeUtils extends CordovaPlugin
         return false;
     }
 
-    private Resources resources = null;
-
     public int getResourceId(String name, String type)
     {
-      if (resources == null)
-      {
-        resources = activity.getResources();
-      }
-
-      return resources.getIdentifier(name, type, activity.getPackageName());
+      return this.activity.getResources().getIdentifier(name, type, activity.getPackageName());
     }
 
     public void ShowDialog(final String id, String title, String message, String[] buttons, boolean vertical)
@@ -88,8 +81,8 @@ public class NativeUtils extends CordovaPlugin
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        int resDialog = getResourceId("layout", "dialog");
-        int resButton = getResourceId("layout", "dialog_button");
+        int resDialog = getResourceId("dialog", "layout");
+        int resButton = getResourceId("dialog_button", "layout");
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout container =  (LinearLayout)inflater.inflate(resDialog, null);
@@ -178,7 +171,7 @@ public class NativeUtils extends CordovaPlugin
         dialog.show();
     }
 
-    private void DialogResult(final UUID id, int index)
+    private void DialogResult(final String id, int index)
     {
         if (callbackDialogs.contains(id))
         {
