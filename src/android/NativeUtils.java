@@ -26,9 +26,14 @@ public class NativeUtils extends CordovaPlugin
 {
 
     private Activity activity = null;
-    private static Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
+    private Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
+
+    public int getResourceId(String name, String type)
+    {
+      return this.activity.getResources().getIdentifier(name, type, activity.getPackageName());
+    }
 
     public boolean execute(String action, JSONArray data, final CallbackContext callbackContext)
     {
@@ -52,8 +57,7 @@ public class NativeUtils extends CordovaPlugin
             }
 
             String id = UUID.randomUUID().toString();
-            callbackDialogs.put(id, callbackContext);
-            ShowDialog(id, title, message, b, b.length > 2 ? true : false);
+            ShowDialog(callbackContext, id, title, message, b, b.length > 2 ? true : false);
 
           }
           catch (JSONException e)
@@ -67,12 +71,7 @@ public class NativeUtils extends CordovaPlugin
         return false;
     }
 
-    public int getResourceId(String name, String type)
-    {
-      return this.activity.getResources().getIdentifier(name, type, activity.getPackageName());
-    }
-
-    public void ShowDialog(final String id, String title, String message, String[] buttons, boolean vertical)
+    public void ShowDialog(final CallbackContext cb, final String id, String title, String message, String[] buttons, boolean vertical)
     {
         final Context context = activity;
 
@@ -113,7 +112,7 @@ public class NativeUtils extends CordovaPlugin
             public void onClick(View v)
             {
                 int index = Integer.parseInt(v.getTag().toString());
-                DialogResult(id, index);
+                ShowDialogResult(cb, index);
 
                 dialog.setOnDismissListener(null);
                 dialog.dismiss();
@@ -151,7 +150,7 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onDismiss(DialogInterface dialog)
             {
-              DialogResult(id, -1);
+              ShowDialogResult(cb, -1);
             }
         });
 
@@ -162,32 +161,16 @@ public class NativeUtils extends CordovaPlugin
         dialog.show();
     }
 
-    private void DialogResult(final String id, int index)
+    private void ShowDialogResult(final CallbackContext cb, int index)
     {
-        Toast.makeText(this.activity, "Result: " + id + " index: " + index, Toast.LENGTH_SHORT).show();
-
-        if (callbackDialogs.contains(id))
-        {
-          CallbackContext callback = callbackDialogs.get(id);
-
-          try
-          {
-            JSONObject response = new JSONObject();
-            response.put("Index", index);
-
-            PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-            result.setKeepCallback(false);
-            callback.sendPluginResult(result);
-          }
-          catch (Exception ex)
-          {
-            PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-            result.setKeepCallback(false);
-            callback.sendPluginResult(result);
-          }
-
-          callbackDialogs.remove(id);
-        }
+      try
+      {
+        cb.success(index);
+      }
+      catch (Exception ex)
+      {
+        cb.error(ex.getMessage());
+      }
     }
 
 
