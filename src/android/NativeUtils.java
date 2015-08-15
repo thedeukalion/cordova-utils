@@ -88,7 +88,7 @@ public class NativeUtils extends CordovaPlugin
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View container =  inflater.inflate(android.R.layout.dialog, null);
+        LinearLayout container =  (LinearLayout)inflater.inflate(R.layout.dialog, null);
 
         TextView t = (TextView)container.getChildAt(0);
         t.setText(title);
@@ -135,7 +135,7 @@ public class NativeUtils extends CordovaPlugin
         for (int i=0; i < buttons.length; i++)
         {
 
-            Button button = (Button)inflater.inflate(android.R.layout.dialog_button, null);
+            Button button = (Button)inflater.inflate(R.layout.dialog_button, null);
 
             LinearLayout.LayoutParams layoutParams = null;
 
