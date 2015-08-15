@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ public class NativeUtils extends CordovaPlugin
 {
 
     private Activity activity = null;
-    private Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
+    private static Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
 
@@ -94,15 +95,6 @@ public class NativeUtils extends CordovaPlugin
         m.setText(message);
 
         LinearLayout b = (LinearLayout)container.getChildAt(3);
-        /*
-        TextView t = (TextView)container.findViewById(R.id.title);
-        t.setText(title);
-
-        TextView m = (TextView)container.findViewById(R.id.message);
-        m.setText(message);
-
-        LinearLayout b = (LinearLayout)container.findViewById(R.id.buttons);
-        */
 
         if (vertical)
         {
@@ -122,7 +114,33 @@ public class NativeUtils extends CordovaPlugin
             {
                 int index = v.getId();
 
-                DialogResult(id, index);
+                Toast.makeText(this.activity.getContext(), "You pressed: " + index, Toast.LENTH_SHORT).show();
+
+                if (callbackDialogs.contains(id))
+                {
+
+                  Toast.makeText(this.activity.getContext(), "Callback exists", Toast.LENTH_SHORT).show();
+
+                  CallbackContext callback = callbackDialogs.get(id);
+                  callbackDialogs.remove(id);
+
+                  try
+                  {
+
+                    JSONObject response = new JSONObject();
+                    response.put("Index", index);
+
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, response);
+                    result.setKeepCallback(false);
+                    callback.sendPluginResult(result);
+                  }
+                  catch (Exception ex)
+                  {
+                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
+                    result.setKeepCallback(false);
+                    callback.sendPluginResult(result);
+                  }
+                }
 
                 dialog.setOnDismissListener(null);
                 dialog.dismiss();
@@ -160,7 +178,29 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onDismiss(DialogInterface dialog)
             {
-              DialogResult(id, -1);
+              if (callbackDialogs.contains(id))
+              {
+                Toast.makeText(this.activity.getContext(), "You dismissed", Toast.LENTH_SHORT).show();
+
+                CallbackContext callback = callbackDialogs.get(id);
+                callbackDialogs.remove(id);
+
+                try
+                {
+                  JSONObject response = new JSONObject();
+                  response.put("Index", -1);
+
+                  PluginResult result = new PluginResult(PluginResult.Status.OK, response);
+                  result.setKeepCallback(false);
+                  callback.sendPluginResult(result);
+                }
+                catch (Exception ex)
+                {
+                  PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
+                  result.setKeepCallback(false);
+                  callback.sendPluginResult(result);
+                }
+              }
             }
         });
 
@@ -170,33 +210,6 @@ public class NativeUtils extends CordovaPlugin
 
         dialog.show();
     }
-
-    private void DialogResult(final String id, int index)
-    {
-        if (callbackDialogs.contains(id))
-        {
-          CallbackContext callback = callbackDialogs.get(id);
-          callbackDialogs.remove(id);
-
-          try
-          {
-
-            JSONObject response = new JSONObject();
-            response.put("Index", index);
-
-            PluginResult result = new PluginResult(PluginResult.Status.OK, response);
-            result.setKeepCallback(false);
-            callback.sendPluginResult(result);
-          }
-          catch (Exception ex)
-          {
-            PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-            result.setKeepCallback(false);
-            callback.sendPluginResult(result);
-          }
-        }
-    }
-
     /*
     private void showDialog(final String id, String title, String message, String positiveButton, String negativeButton)
     {
