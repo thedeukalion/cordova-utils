@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Button;
 import android.view.LayoutInflater;
 import android.widget.Toast;
@@ -197,8 +198,7 @@ public class NativeUtils extends CordovaPlugin
 
     public void ShowInput(final CallbackContext cb, String title, String defaultText, String okButton, String cancelButton)
     {
-
-        final Context context = this;
+        final Context context = activity;
 
         if (context == null)
             return;
