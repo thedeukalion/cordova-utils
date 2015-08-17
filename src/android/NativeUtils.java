@@ -29,6 +29,7 @@ public class NativeUtils extends CordovaPlugin
     private Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
+    public static final String ACTION_SHOWINPUT = "showInput";
 
     public int getResourceId(String name, String type)
     {
@@ -56,8 +57,7 @@ public class NativeUtils extends CordovaPlugin
               b[i] = buttons.getString(i);
             }
 
-            String id = UUID.randomUUID().toString();
-            ShowDialog(callbackContext, id, title, message, b, b.length > 2 ? true : false);
+            ShowDialog(callbackContext, title, message, b, b.length > 2 ? true : false);
 
           }
           catch (JSONException e)
@@ -67,11 +67,30 @@ public class NativeUtils extends CordovaPlugin
 
           return true;
         }
+        else if (action.equals(ACTION_SHOWINPUT))
+        {
+            try
+            {
+              String title = data.getString(0);
+              String defaultText = data.getString(1);
+              String okButton = data.getString(2);
+              String cancelButton = data.getString(3);
+
+              ShowInput(callbackContext, title, defaultText, okButton, cancelButton);
+
+            }
+            catch (JSONException e)
+            {
+              callbackContext.error(e.getMessage());
+            }
+
+            return true;
+        }
 
         return false;
     }
 
-    public void ShowDialog(final CallbackContext cb, final String id, String title, String message, String[] buttons, boolean vertical)
+    public void ShowDialog(final CallbackContext cb, String title, String message, String[] buttons, boolean vertical)
     {
         final Context context = activity;
 
@@ -163,6 +182,122 @@ public class NativeUtils extends CordovaPlugin
                 cb.success(-1);
               }
               catch (Exception ex)
+              {
+                cb.error(ex.getMessage());
+              }
+            }
+        });
+
+        t.measure(0, 0);
+        b.measure(0, 0);
+        container.measure(0, 0);
+
+        dialog.show();
+    }
+
+    public void ShowInput(final CallbackContext cb, String title, String defaultText, String okButton, String cancelButton)
+    {
+
+        final Context context = this;
+
+        if (context == null)
+            return;
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        int resDialog = getResourceId("dialog_input", "layout");
+        int resButton = getResourceId("dialog_button", "layout");
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout container =  (LinearLayout)inflater.inflate(resDialog, null);
+
+        final TextView t = (TextView)container.getChildAt(0);
+        t.setText(title);
+
+        final EditText e = (EditText)container.getChildAt(1);
+        e.setText(defaultText);
+
+        LinearLayout b = (LinearLayout)container.getChildAt(2);
+
+        float buttonWeight = 0.5f;
+
+        View.OnClickListener clickListener = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int id = Integer.parseInt(v.getTag().toString());
+
+                if (id == 0)
+                {
+                  try
+                  {
+                      JSONObject obj = new JSONObject();
+                      obj.put("Cancelled", false);
+                      obj.optString("Input", e.getText().toString());
+
+                      cb.success(obj);
+                  }
+                  catch (JSONException ex)
+                  {
+                    cb.error(ex.getMessage());
+                  }
+
+                }
+                else
+                {
+                  try
+                  {
+                      JSONObject obj = new JSONObject();
+                      obj.put("Cancelled", true);
+
+                      cb.success(obj);
+                  }
+                  catch (JSONException ex)
+                  {
+                    cb.error(ex.getMessage());
+                  }
+
+                }
+
+                dialog.setOnDismissListener(null);
+                dialog.dismiss();
+            }
+        };
+
+
+        LinearLayout.LayoutParams layoutParams = null;
+        layoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.weight = buttonWeight;
+
+        Button buttonOK = (Button)inflater.inflate(resButton, null);
+        buttonOK.setLayoutParams(layoutParams);
+        buttonOK.setText(okButton);
+        buttonOK.setTag(0);
+        buttonOK.setOnClickListener(clickListener);
+        b.addView(buttonOK);
+
+        Button buttonCancel = (Button)inflater.inflate(resButton, null);
+        buttonCancel.setLayoutParams(layoutParams);
+        buttonCancel.setText(cancelButton);
+        buttonCancel.setTag(1);
+        buttonCancel.setOnClickListener(clickListener);
+        b.addView(buttonCancel);
+
+        dialog.setContentView(container);
+        dialog.setOnDismissListener(new Dialog.OnDismissListener()
+        {
+            @Override
+            public void onDismiss(DialogInterface dialog)
+            {
+              try
+              {
+                  JSONObject obj = new JSONObject();
+                  obj.put("Cancelled", true);
+                  cb.success(obj);
+              }
+              catch (JSONException ex)
               {
                 cb.error(ex.getMessage());
               }
