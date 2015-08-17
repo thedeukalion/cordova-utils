@@ -24,9 +24,10 @@
         <!--<framework src="com.android.support:appcompat-v7:22.2.0"/>-->
 
         <source-file src="src/android/NativeUtils.java" target-dir="src/com/nativeutils" />
-        
+
         <source-file src="src/android/res/layout/dialog.xml" target-dir="res/layout" />
         <source-file src="src/android/res/layout/dialog_button.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/dialog_input.xml" target-dir="res/layout" />
         <source-file src="src/android/res/drawable/dialog_button.xml" target-dir="res/drawable" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application"></config-file>
