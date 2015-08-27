@@ -90,12 +90,25 @@ public class NativeUtils extends CordovaPlugin
         {
           try
           {
-            String color = data.getString(0);
-            Toast.makeText(this.activity, "Color is: " + color, Toast.LENGTH_LONG).show();
-            StatusBarSetColor(callbackContext, color);
+            this.activity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                      StatusBarSetColor(callbackContext, data.getString(0));
+                    }
+                    catch (JSONException ignore)
+                    {
+                    }
+                }
+            });
 
           }
           catch (JSONException e) { }
+
+          return true;
         }
 
         return false;
