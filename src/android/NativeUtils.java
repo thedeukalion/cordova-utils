@@ -90,6 +90,8 @@ public class NativeUtils extends CordovaPlugin
         {
           try
           {
+            final String color = data.getString(0);
+
             this.activity.runOnUiThread(new Runnable()
             {
                 @Override
@@ -97,7 +99,7 @@ public class NativeUtils extends CordovaPlugin
                 {
                     try
                     {
-                      StatusBarSetColor(callbackContext, data.getString(0));
+                      StatusBarSetColor(callbackContext, color);
                     }
                     catch (JSONException ignore)
                     {
