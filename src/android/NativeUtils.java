@@ -91,7 +91,8 @@ public class NativeUtils extends CordovaPlugin
           try
           {
             String color = data.getString(0);
-            StatusBarSetColor(color);
+            Toast.makeText(this.activity, "Color is: " + color, Toast.LENGTH_LONG).show();
+            StatusBarSetColor(callbackContext, color);
 
           }
           catch (JSONException e) { }
@@ -320,7 +321,7 @@ public class NativeUtils extends CordovaPlugin
         dialog.show();
     }
 
-    public void StatusBarSetColor(String color)
+    public void StatusBarSetColor(final CallbackContext cb, String color)
     {
         if (Build.VERSION.SDK_INT >= 21)
         {
@@ -328,17 +329,27 @@ public class NativeUtils extends CordovaPlugin
             {
                 try
                 {
-                    int c = Color.parseColor(color);
-
                     final Window window = this.activity.getWindow();
 
                     window.clearFlags(0x04000000); // SDK 19: WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                     window.addFlags(0x80000000); // SDK 21: WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
                     window.getClass().getDeclaredMethod("setStatusBarColor", int.class).invoke(window, Color.parseColor(color));
+                    cb.success();
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                  cb.error(ex.getMessage());
+                }
             }
+            else
+            {
+              cb.error("No color");
+            }
+        }
+        else
+        {
+          cb.error("Unsupported version");
         }
     }
 

@@ -33,10 +33,10 @@ module.exports =
       );
     },
 
-    statusBarSetColor: function(color)
+    statusBarSetColor: function(color, success, failure)
     {
-      exec(function() {},
-           function() {},
+      exec(success || function() {},
+           failure || function() {},
            'NativeUtils',
            'statusBarSetColor',
            [color]
