@@ -25,3 +25,46 @@ if (window.plugins && window.plugins.nativeUtils)
   });
 }
 ```
+
+###ShowInput
+```
+if (window.plugins && window.plugins.nativeUtils)
+{
+  window.plugins.nativeUtils.showInput(function(result)
+  {
+    if (result.Cancelled)
+    {
+      console.log("You cancelled");
+    }
+    else
+    {
+      console.log("Your name is: " + result.Input);
+    }
+  },
+  function(error)
+  {
+  },
+  {
+    title: "Enter your name",
+    defaultText: "Your name here",
+    buttonOk: "Continue",
+    buttonCancel: "Cancel"
+  });
+}
+```
+
+###StatusBarSetColor
+```
+if (window.plugins && window.plugins.nativeUtils)
+{
+  // RED STATUS BAR
+  window.plugins.nativeUtils.statusBarSetColor("#ff0000");
+
+  // GREEN STATUS BAR
+  window.plugins.nativeUtils.statusBarSetColor("#0000ff");
+
+  // BLUE STATUS BAR
+  window.plugins.nativeUtils.statusBarSetColor("#00ff00");
+
+}
+```
