@@ -31,5 +31,15 @@ module.exports =
            'showInput',
            [title, defaultText, buttonOk, buttonCancel]
       );
+    },
+
+    statusBarSetColor: function(color)
+    {
+      exec(function() {},
+           function() {},
+           'NativeUtils',
+           'statusBarSetColor',
+           [color]
+      );
     }
 };

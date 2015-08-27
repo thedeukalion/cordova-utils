@@ -20,17 +20,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Hashtable;
-import java.util.UUID;
-
 public class NativeUtils extends CordovaPlugin
 {
 
     private Activity activity = null;
-    private Hashtable<String, CallbackContext> callbackDialogs = new Hashtable<>();
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
+    public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
 
     public int getResourceId(String name, String type)
     {
@@ -86,6 +83,16 @@ public class NativeUtils extends CordovaPlugin
             }
 
             return true;
+        }
+        else if (action.equals(ACTION_STATUSBAR_SETCOLOR))
+        {
+          try
+          {
+            String color = data.getString(0);
+            StatusBarSetColor(color);
+
+          }
+          catch (JSONException e) { }
         }
 
         return false;
@@ -310,4 +317,27 @@ public class NativeUtils extends CordovaPlugin
 
         dialog.show();
     }
+
+    public void StatusBarSetColor(String color)
+    {
+        if (Build.VERSION.SDK_INT >= 21)
+        {
+            if (color != null && !color.isEmpty())
+            {
+                try
+                {
+                    int c = Color.parseColor(color);
+
+                    final Window window = this.activity.getWindow();
+
+                    window.clearFlags(0x04000000); // SDK 19: WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.addFlags(0x80000000); // SDK 21: WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+                    window.getClass().getDeclaredMethod("setStatusBarColor", int.class).invoke(window, Color.parseColor(color));
+                }
+                catch (Exception ex) { }
+            }
+        }
+    }
+
 }
