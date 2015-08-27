@@ -1,19 +1,21 @@
 package com.nativeutils;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.view.View;
 import android.view.Window;
+import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
-import android.view.LayoutInflater;
 import android.widget.Toast;
+import android.graphics.Color;
+import android.os.Build;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
