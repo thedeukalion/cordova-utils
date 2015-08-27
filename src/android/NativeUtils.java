@@ -97,13 +97,7 @@ public class NativeUtils extends CordovaPlugin
                 @Override
                 public void run()
                 {
-                    try
-                    {
-                      StatusBarSetColor(callbackContext, color);
-                    }
-                    catch (JSONException ignore)
-                    {
-                    }
+                  StatusBarSetColor(callbackContext, color);
                 }
             });
 
