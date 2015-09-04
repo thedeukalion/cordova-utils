@@ -32,13 +32,13 @@ if (window.plugins && window.plugins.nativeUtils)
 {
   window.plugins.nativeUtils.showInput(function(result)
   {
-    if (result.Cancelled)
+    if (result.buttonIndex == 1)
     {
       console.log("You cancelled");
     }
     else
     {
-      console.log("Your name is: " + result.Input);
+      console.log("Your name is: " + result.input1);
     }
   },
   function(error)

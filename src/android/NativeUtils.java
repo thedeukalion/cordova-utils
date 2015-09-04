@@ -246,42 +246,27 @@ public class NativeUtils extends CordovaPlugin
             @Override
             public void onClick(View v)
             {
-                int id = Integer.parseInt(v.getTag().toString());
+              try
+              {
+                  int id = Integer.parseInt(v.getTag().toString());
 
-                if (id == 0)
-                {
-                  try
-                  {
-                      JSONObject obj = new JSONObject();
-                      obj.put("Cancelled", false);
-                      obj.optString("Input", e.getText().toString());
+                  JSONObject obj = new JSONObject();
+                  obj.put("buttonIndex", id);
 
-                      cb.success(obj);
-                  }
-                  catch (JSONException ex)
+                  if (id == 0)
                   {
-                    cb.error(ex.getMessage());
+                    obj.put("input1", e.getText().toString());
                   }
 
-                }
-                else
-                {
-                  try
-                  {
-                      JSONObject obj = new JSONObject();
-                      obj.put("Cancelled", true);
+                  cb.success(obj);
+              }
+              catch (JSONException ex)
+              {
+                cb.error(ex.getMessage());
+              }
 
-                      cb.success(obj);
-                  }
-                  catch (JSONException ex)
-                  {
-                    cb.error(ex.getMessage());
-                  }
-
-                }
-
-                dialog.setOnDismissListener(null);
-                dialog.dismiss();
+              dialog.setOnDismissListener(null);
+              dialog.dismiss();
             }
         };
 
@@ -313,7 +298,7 @@ public class NativeUtils extends CordovaPlugin
               try
               {
                   JSONObject obj = new JSONObject();
-                  obj.put("Cancelled", true);
+                  obj.put("buttonIndex", -1);
                   cb.success(obj);
               }
               catch (JSONException ex)
@@ -340,8 +325,8 @@ public class NativeUtils extends CordovaPlugin
                 {
                     final Window window = this.activity.getWindow();
 
-                    window.clearFlags(0x04000000); // SDK 19: WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.addFlags(0x80000000); // SDK 21: WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.clearFlags(0x04000000);
+                    window.addFlags(0x80000000);
 
                     window.getClass().getDeclaredMethod("setStatusBarColor", int.class).invoke(window, Color.parseColor(color));
                     cb.success();
