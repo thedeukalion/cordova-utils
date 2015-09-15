@@ -356,49 +356,38 @@ public class NativeUtils extends CordovaPlugin
 
     public void onDestroy()
     {
-      if (lifecycleCallback == null)
-        return;
-
-      try
-      {
-          PluginResult result = new PluginResult(PluginResult.Status.OK, "Destroy");
-          result.setKeepCallback(true);
-          lifecycleCallback.sendPluginResult(result);
-      }
-      catch (Exception ex)
-      {
-      }
+      Toast.makeText(this.activity, "Destroy", Toast.LENGTH_LONG).show();
+      SendLifeCycleEvent("Destroy");
     }
 
     public void onPause(boolean multitasking)
     {
-      if (lifecycleCallback == null)
-        return;
-
-      try
-      {
-          PluginResult result = new PluginResult(PluginResult.Status.OK, "Pause");
-          result.setKeepCallback(true);
-          lifecycleCallback.sendPluginResult(result);
-      }
-      catch (Exception ex)
-      {
-      }
+      Toast.makeText(this.activity, "Pause", Toast.LENGTH_LONG).show();
+      SendLifeCycleEvent("Pause");
     }
 
     public void onResume(boolean multitasking)
+    {
+      Toast.makeText(this.activity, "Resume", Toast.LENGTH_LONG).show();
+      SendLifeCycleEvent("Resume");
+    }
+
+    private void SendLifeCycleEvent(String event)
     {
       if (lifecycleCallback == null)
         return;
 
       try
       {
-          PluginResult result = new PluginResult(PluginResult.Status.OK, "Resume");
+          PluginResult result = new PluginResult(PluginResult.Status.OK, event);
           result.setKeepCallback(true);
           lifecycleCallback.sendPluginResult(result);
       }
       catch (Exception ex)
       {
+          PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
+          result.setKeepCallback(true);
+          lifecycleCallback.sendPluginResult(result);
       }
     }
 
