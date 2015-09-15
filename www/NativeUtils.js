@@ -48,7 +48,7 @@ module.exports =
       exec(success || function() {},
            error || function() {},
            'NativeUtils',
-           'setLifecycleCallback',
+           'setLifecycleListener',
            []
       );
     }
