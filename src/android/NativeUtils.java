@@ -26,13 +26,12 @@ public class NativeUtils extends CordovaPlugin
 {
 
     private Activity activity = null;
+    private CallbackContext lifecycleListener = null;
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
     public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
     public static final String ACTION_SETLIFECYCLELISTENER = "setLifecycleListener";
-
-    private CallbackContext lifecycleListener = null;
 
     public int getResourceId(String name, String type)
     {
@@ -48,6 +47,7 @@ public class NativeUtils extends CordovaPlugin
         if (action.equals(ACTION_SETLIFECYCLELISTENER))
         {
             this.lifecycleListener = callbackContext;
+            return true;
         }
         else if (action.equals(ACTION_SHOWDIALOG))
         {
@@ -356,30 +356,32 @@ public class NativeUtils extends CordovaPlugin
 
     public void onDestroy()
     {
-      Toast.makeText(this.activity, "Destroy", Toast.LENGTH_LONG).show();
       SendLifeCycleEvent("Destroy");
     }
 
     public void onPause(boolean multitasking)
     {
-      Toast.makeText(this.activity, "Pause", Toast.LENGTH_LONG).show();
       SendLifeCycleEvent("Pause");
     }
 
     public void onResume(boolean multitasking)
     {
-      Toast.makeText(this.activity, "Resume", Toast.LENGTH_LONG).show();
       SendLifeCycleEvent("Resume");
     }
 
-    private void SendLifeCycleEvent(String event)
+    private void SendLifeCycleEvent(final String event)
     {
       if (lifecycleListener == null)
         return;
 
+      Toast.makeText(this.activity, event, Toast.LENGTH_LONG).show();
+
       try
       {
-          PluginResult result = new PluginResult(PluginResult.Status.OK, event);
+          JSONObject jo = new JSONObject();
+          jo.put("event", event);
+
+          PluginResult result = new PluginResult(PluginResult.Status.OK, jo);
           result.setKeepCallback(true);
           lifecycleListener.sendPluginResult(result);
       }
