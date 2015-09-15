@@ -7,7 +7,7 @@
     <name>CDVNativeUtils</name>
     <description>Native Utils for Cordova Apps</description>
     <license>Private</license>
-    <keywords>phonegap,native,android</keywords>
+    <keywords>phonegap,native,android,ios</keywords>
 
     <engines>
         <engine name="cordova" version=">=3.0.0" />
@@ -37,6 +37,18 @@
                 <param name="android-package" value="com.nativeutils.NativeUtils"/>
             </feature>
         </config-file>
+
+     </platform>
+
+     <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="NativeUtils">
+                <param name="ios-package" value="NativeUtils"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/NativeUtils.h" />
+        <source-file src="src/ios/NativeUtils.m" />
 
      </platform>
 
