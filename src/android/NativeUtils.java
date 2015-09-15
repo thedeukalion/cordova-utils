@@ -31,7 +31,6 @@ public class NativeUtils extends CordovaPlugin
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
     public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
-    public static final String ACTION_SETLIFECYCLELISTENER = "setLifecycleListener";
 
     public int getResourceId(String name, String type)
     {
@@ -44,12 +43,7 @@ public class NativeUtils extends CordovaPlugin
         if (this.activity == null)
             this.activity = this.cordova.getActivity();
 
-        if (action.equals(ACTION_SETLIFECYCLELISTENER))
-        {
-            this.lifecycleListener = callbackContext;
-            return true;
-        }
-        else if (action.equals(ACTION_SHOWDIALOG))
+        if (action.equals(ACTION_SHOWDIALOG))
         {
           try
           {
@@ -352,35 +346,6 @@ public class NativeUtils extends CordovaPlugin
         {
           cb.error("Unsupported version");
         }
-    }
-
-    public void onPause(boolean multitasking)
-    {
-      SendLifeCycleEvent("Pause");
-    }
-
-    public void onResume(boolean multitasking)
-    {
-      SendLifeCycleEvent("Resume");
-    }
-
-    private void SendLifeCycleEvent(final String event)
-    {
-      if (lifecycleListener == null)
-        return;
-
-      try
-      {
-          PluginResult result = new PluginResult(PluginResult.Status.OK, event);
-          result.setKeepCallback(true);
-          lifecycleListener.sendPluginResult(result);
-      }
-      catch (Exception ex)
-      {
-          PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
-          result.setKeepCallback(true);
-          lifecycleListener.sendPluginResult(result);
-      }
     }
 
 }
