@@ -40,16 +40,4 @@
 
      </platform>
 
-     <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="NativeUtils">
-                <param name="ios-package" value="NativeUtils"/>
-            </feature>
-        </config-file>
-
-        <header-file src="src/ios/NativeUtils.h" />
-        <source-file src="src/ios/NativeUtils.m" />
-
-     </platform>
-
 </plugin>
