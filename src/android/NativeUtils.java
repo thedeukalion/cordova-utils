@@ -374,20 +374,20 @@ public class NativeUtils extends CordovaPlugin
 
     private void SendLifeCycleEvent(String event)
     {
-      if (lifecycleCallback == null)
+      if (lifecycleListener == null)
         return;
 
       try
       {
           PluginResult result = new PluginResult(PluginResult.Status.OK, event);
           result.setKeepCallback(true);
-          lifecycleCallback.sendPluginResult(result);
+          lifecycleListener.sendPluginResult(result);
       }
       catch (Exception ex)
       {
           PluginResult result = new PluginResult(PluginResult.Status.ERROR, ex.getMessage());
           result.setKeepCallback(true);
-          lifecycleCallback.sendPluginResult(result);
+          lifecycleListener.sendPluginResult(result);
       }
     }
 
