@@ -78,7 +78,7 @@ Native Tools for Android/IOS on Cordova (Especially IOS)
 if (window.plugins && window.plugins.nativeUtils)
 {
   // RED STATUS BAR
-  window.plugins.nativeUtils.setLifecycleCallback(function(state)
+  window.plugins.nativeUtils.setLifecycleListener(function(state)
   {
     if (state == "Pause")
     {
@@ -93,6 +93,10 @@ if (window.plugins && window.plugins.nativeUtils)
       console.log("App is being destroyed");
     }
 
+  },
+  function(error)
+  {
+    console.log("Lifecycle error: " + error);
   });
 
 }

@@ -7,7 +7,7 @@
 
 @property (nonatomic, strong) NSString* syncCallbackId;
 
-- (void) setLifecycleCallback:(CDVInvokedUrlCommand*)command;
+- (void) setLifecycleListener:(CDVInvokedUrlCommand*)command;
 
 - (void) onSuspend:(NSNotification *) notification;
 - (void) onResume:(NSNotification *) notification;

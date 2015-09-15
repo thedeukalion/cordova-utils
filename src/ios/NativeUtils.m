@@ -15,7 +15,7 @@
 
 @synthesize syncCallbackId;
 
-- (void) setLifecycleCallback:(CDVInvokedUrlCommand*)command
+- (void) setLifecycleListener:(CDVInvokedUrlCommand*)command
 {
   self.syncCallbackId = command.callbackId;
 }

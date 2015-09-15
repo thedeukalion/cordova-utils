@@ -30,9 +30,9 @@ public class NativeUtils extends CordovaPlugin
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
     public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
-    public static final String ACTION_SETLIFECYCLECALLBACK = "setLifecycleCallback";
+    public static final String ACTION_SETLIFECYCLELISTENER = "setLifecycleListener";
 
-    private CallbackContext lifecycleCallback = null;
+    private CallbackContext lifecycleListener = null;
 
     public int getResourceId(String name, String type)
     {
@@ -45,9 +45,9 @@ public class NativeUtils extends CordovaPlugin
         if (this.activity == null)
             this.activity = this.cordova.getActivity();
 
-        if (action.equals(ACTION_SETLIFECYCLECALLBACK))
+        if (action.equals(ACTION_SETLIFECYCLELISTENER))
         {
-            this.lifecycleCallback = callbackContext;
+            this.lifecycleListener = callbackContext;
         }
         else if (action.equals(ACTION_SHOWDIALOG))
         {
