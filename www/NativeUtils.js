@@ -43,10 +43,10 @@ module.exports =
       );
     },
 
-    setLifecycleListener: function(success, error)
+    setLifecycleListener: function(success, failure)
     {
       exec(success || function() {},
-           error || function() {},
+           failure || function() {},
            'NativeUtils',
            'setLifecycleListener',
            []
