@@ -1,4 +1,4 @@
-#import "NativeUtils.h"
+#import "CordovaNativeUtils.h"
 
 @implementation NativeUtils
 {
@@ -50,18 +50,6 @@
 
 - (void) onAppTerminate
 {
-  if (self.syncCallbackId != nil)
-  {
-    @try
-    {
-      CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Destroy"];
-      [result setKeepCallbackAsBool:YES];
-      [self.commandDelegate sendPluginResult:result callbackId:self.syncCallbackId];
-    }
-    @catch (NSException *exception) { }
-    @finally { }
-
-  }
 }
 
 @end

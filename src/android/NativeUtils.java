@@ -354,11 +354,6 @@ public class NativeUtils extends CordovaPlugin
         }
     }
 
-    public void onDestroy()
-    {
-      SendLifeCycleEvent("Destroy");
-    }
-
     public void onPause(boolean multitasking)
     {
       SendLifeCycleEvent("Pause");
@@ -374,14 +369,9 @@ public class NativeUtils extends CordovaPlugin
       if (lifecycleListener == null)
         return;
 
-      Toast.makeText(this.activity, event, Toast.LENGTH_LONG).show();
-
       try
       {
-          JSONObject jo = new JSONObject();
-          jo.put("event", event);
-
-          PluginResult result = new PluginResult(PluginResult.Status.OK, jo);
+          PluginResult result = new PluginResult(PluginResult.Status.OK, event);
           result.setKeepCallback(true);
           lifecycleListener.sendPluginResult(result);
       }

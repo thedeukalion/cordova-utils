@@ -34,7 +34,7 @@
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="NativeUtils">
-                <param name="android-package" value="com.nativeutils.NativeUtils"/>
+                <param name="android-package" value="com.nativeutils.CordovaNativeUtils"/>
             </feature>
         </config-file>
 

@@ -88,10 +88,6 @@ if (window.plugins && window.plugins.nativeUtils)
     {
       console.log("App has entered foreground");
     }
-    else if (state == "Destroy")
-    {
-      console.log("App is being destroyed");
-    }
 
   },
   function(error)
