@@ -68,3 +68,32 @@ if (window.plugins && window.plugins.nativeUtils)
 
 }
 ```
+
+###Listeners
+
+Native Tools for Android/IOS on Cordova (Especially IOS)
+
+###LifeCycleCallback
+```
+if (window.plugins && window.plugins.nativeUtils)
+{
+  // RED STATUS BAR
+  window.plugins.nativeUtils.setLifecycleCallback(function(state)
+  {
+    if (state == "Pause")
+    {
+      console.log("App has entered background");
+    }
+    else if (state == "Resume")
+    {
+      console.log("App has entered foreground");
+    }
+    else if (state == "Destroy")
+    {
+      console.log("App is being destroyed");
+    }
+
+  });
+
+}
+```
