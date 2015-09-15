@@ -1,4 +1,4 @@
-#import "CordovaNativeUtils.h"
+#import "NativeUtils.h"
 
 @implementation NativeUtils
 {
