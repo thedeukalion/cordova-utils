@@ -30,6 +30,9 @@ public class NativeUtils extends CordovaPlugin
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
     public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
+    public static final String ACTION_SETLIFECYCLECALLBACK = "setLifecycleCallback";
+
+    private CallbackContext lifecycleCallback = null;
 
     public int getResourceId(String name, String type)
     {
@@ -42,7 +45,11 @@ public class NativeUtils extends CordovaPlugin
         if (this.activity == null)
             this.activity = this.cordova.getActivity();
 
-        if (action.equals(ACTION_SHOWDIALOG))
+        if (action.equals(ACTION_SETLIFECYCLECALLBACK))
+        {
+            this.lifecycleCallback = callbackContext;
+        }
+        else if (action.equals(ACTION_SHOWDIALOG))
         {
           try
           {
@@ -345,6 +352,54 @@ public class NativeUtils extends CordovaPlugin
         {
           cb.error("Unsupported version");
         }
+    }
+
+    public void onDestroy()
+    {
+      if (lifecycleCallback == null)
+        return;
+
+      try
+      {
+          PluginResult result = new PluginResult(PluginResult.Status.OK, "Destroy");
+          result.setKeepCallback(true);
+          lifecycleCallback.sendPluginResult(result);
+      }
+      catch (Exception ex)
+      {
+      }
+    }
+
+    public void onPause(boolean multitasking)
+    {
+      if (lifecycleCallback == null)
+        return;
+
+      try
+      {
+          PluginResult result = new PluginResult(PluginResult.Status.OK, "Pause");
+          result.setKeepCallback(true);
+          lifecycleCallback.sendPluginResult(result);
+      }
+      catch (Exception ex)
+      {
+      }
+    }
+
+    public void onResume(boolean multitasking)
+    {
+      if (lifecycleCallback == null)
+        return;
+
+      try
+      {
+          PluginResult result = new PluginResult(PluginResult.Status.OK, "Resume");
+          result.setKeepCallback(true);
+          lifecycleCallback.sendPluginResult(result);
+      }
+      catch (Exception ex)
+      {
+      }
     }
 
 }

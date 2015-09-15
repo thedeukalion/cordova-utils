@@ -41,5 +41,15 @@ module.exports =
            'statusBarSetColor',
            [color]
       );
+    },
+
+    setLifecycleCallback: function(success, failure)
+    {
+      exec(success || function() {},
+           failure || function() {},
+           'NativeUtils',
+           'setLifecycleCallback',
+           []
+      );
     }
 };
