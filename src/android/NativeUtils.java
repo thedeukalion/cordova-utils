@@ -124,7 +124,7 @@ public class NativeUtils extends CordovaPlugin
             //obj.put("dpi", dpi);
             callbackContext.success(dpi);
           }
-          catch (JSONException e) { }
+          catch (Exception e) { }
 
           return true;
         }
