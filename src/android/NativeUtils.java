@@ -111,18 +111,20 @@ public class NativeUtils extends CordovaPlugin
         {
           try
           {
-            if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 2.0))
-              return callbackContext.success("xhdpi");
-          	else if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 1.5))
-              return callbackContext.success("hdpi");
-          	else if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 1))
-              return callbackContext.success("mdpi");
+            //JSONObject obj = new JSONObject();
+            String dpi = "hdpi";
 
+            if (this.activity.getResources()getDisplayMetrics().density >= 2.0)
+              dpi = "xhdpi";
+            else if (this.activity.getResources().getDisplayMetrics().density >= 1.5)
+              dpi = "hdpi";
+            else if (this.activity.getResources().getDisplayMetrics().density >= 1)
+              dpi = "mdpi";
+
+            //obj.put("dpi", dpi);
+            callbackContext.success(dpi);
           }
-          catch (Exception ex)
-          {
-            callbackContext.success("hdpi");
-          }
+          catch (JSONException e) { }
 
           return true;
         }

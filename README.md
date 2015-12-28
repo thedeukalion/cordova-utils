@@ -73,18 +73,17 @@ if (window.plugins && window.plugins.nativeUtils)
 ```
 if (window.plugins && window.plugins.nativeUtils)
 {
-  // RED STATUS BAR
   window.plugins.nativeUtils.getDensity(function(dpi)
   {
     if (dpi == "xhdpi")
     {
       console.log("Density is XHDPI");
     }
-    else if (state == "hdpi")
+    else if (dpi == "hdpi")
     {
       console.log("Density is HDPI");
     }
-    else if (state == "hdpi")
+    else if (dpi == "mdpi")
     {
       console.log("Density is MDPI");
     }
