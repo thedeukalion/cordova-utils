@@ -43,10 +43,10 @@ module.exports =
       );
     },
 
-    getDensity: function(success)
+    getDensity: function(success, failure)
     {
       exec(success || function() {},
-           function() {},
+           failure || function() {},
            'NativeUtils',
            'getDensity',
            []

@@ -73,17 +73,20 @@ if (window.plugins && window.plugins.nativeUtils)
 ```
 if (window.plugins && window.plugins.nativeUtils)
 {
-  window.plugins.nativeUtils.getDensity(function(dpi)
+  window.plugins.nativeUtils.getDensity(function(result)
   {
-    if (dpi == "xhdpi")
+    console.log("DPI: " + result.dpi);
+    console.log("Density: " + result.density);
+
+    if (result.dpi == "xhdpi")
     {
       console.log("Density is XHDPI");
     }
-    else if (dpi == "hdpi")
+    else if (result.dpi == "hdpi")
     {
       console.log("Density is HDPI");
     }
-    else if (dpi == "mdpi")
+    else if (result.dpi == "mdpi")
     {
       console.log("Density is MDPI");
     }
