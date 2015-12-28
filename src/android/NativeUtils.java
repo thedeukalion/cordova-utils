@@ -114,7 +114,7 @@ public class NativeUtils extends CordovaPlugin
             //JSONObject obj = new JSONObject();
             String dpi = "hdpi";
 
-            if (this.activity.getResources()getDisplayMetrics().density >= 2.0)
+            if (this.activity.getResources().getDisplayMetrics().density >= 2.0)
               dpi = "xhdpi";
             else if (this.activity.getResources().getDisplayMetrics().density >= 1.5)
               dpi = "hdpi";
