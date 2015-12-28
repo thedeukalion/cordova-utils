@@ -43,12 +43,12 @@ module.exports =
       );
     },
 
-    setLifecycleListener: function(success, failure)
+    getDensity: function(success)
     {
       exec(success || function() {},
-           failure || function() {},
+           function() {},
            'NativeUtils',
-           'setLifecycleListener',
+           'getDensity',
            []
       );
     }

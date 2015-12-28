@@ -26,11 +26,11 @@ public class NativeUtils extends CordovaPlugin
 {
 
     private Activity activity = null;
-    private CallbackContext lifecycleListener = null;
 
     public static final String ACTION_SHOWDIALOG = "showDialog";
     public static final String ACTION_SHOWINPUT = "showInput";
     public static final String ACTION_STATUSBAR_SETCOLOR = "statusBarSetColor";
+    public static final String ACTION_GETDENSITY = "getDensity";
 
     public int getResourceId(String name, String type)
     {
@@ -104,6 +104,25 @@ public class NativeUtils extends CordovaPlugin
 
           }
           catch (JSONException e) { }
+
+          return true;
+        }
+        else if (action.equals(ACTION_GETDENSITY))
+        {
+          try
+          {
+            if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 2.0))
+              return callbackContext.success("xhdpi");
+          	else if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 1.5))
+              return callbackContext.success("hdpi");
+          	else if ((this.activity.getContext().getResources().getDisplayMetrics().density >= 1))
+              return callbackContext.success("mdpi");
+
+          }
+          catch (Exception ex)
+          {
+            callbackContext.success("hdpi");
+          }
 
           return true;
         }

@@ -69,30 +69,26 @@ if (window.plugins && window.plugins.nativeUtils)
 }
 ```
 
-###Listeners
-
-Native Tools for Android/IOS on Cordova (Especially IOS)
-
-###LifeCycleCallback
+###GetDensity
 ```
 if (window.plugins && window.plugins.nativeUtils)
 {
   // RED STATUS BAR
-  window.plugins.nativeUtils.setLifecycleListener(function(state)
+  window.plugins.nativeUtils.getDensity(function(dpi)
   {
-    if (state == "Pause")
+    if (dpi == "xhdpi")
     {
-      console.log("App has entered background");
+      console.log("Density is XHDPI");
     }
-    else if (state == "Resume")
+    else if (state == "hdpi")
     {
-      console.log("App has entered foreground");
+      console.log("Density is HDPI");
+    }
+    else if (state == "hdpi")
+    {
+      console.log("Density is MDPI");
     }
 
-  },
-  function(error)
-  {
-    console.log("Lifecycle error: " + error);
   });
 
 }
